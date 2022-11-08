@@ -1,15 +1,22 @@
 <template>
 <div>
   <div class="container">
-    <div class="row mt-4" v-show="categoryBalanceAnalyticsData">
-      <div v-for="item in categoryBalanceAnalyticsData" :key="item" class="col-12 col-sm-6 col-md-4 col-xl-3">
+    <div class="row mt-4 position-relative" style="min-height: 150px">
+      <LoadingComponent
+          v-if="isLoading('categoryBalanceAnalyticsData')"
+      />
+      <div v-else v-for="item in categoryBalanceAnalyticsData" :key="item" class="col-12 col-sm-6 col-md-4 col-xl-3">
                 <CategoryBalanceAnalyticsCard
                   :item="item"
                 />
       </div>
     </div>
-    <div class="row mt-4">
+    <div class="row mt-4 position-relative" style="min-height: 150px">
+      <LoadingComponent
+          v-if="isLoading('transfer')"
+      />
       <base-grid
+        v-else
         :items="transfers"
         :headers="['Nr.', 'Pavadinimas', 'Kaina', 'Kategorija', 'Sąskaita', 'Data']"
         :columns="['id', 'name', 'amount', 'category_name', 'account_name', 'created_at']"
@@ -22,21 +29,30 @@
 <script>
 import CategoryBalanceAnalyticsCard from "@/components/analytics/CategoryBalanceAnalyticsCard.vue";
 import BaseGrid from "@/components/app/grid/BaseGrid.vue";
+import LoadingComponent from "@/components/app/LoadingComponent.vue";
 export default {
   name: "HomePage",
+  components: {
+    BaseGrid,
+    CategoryBalanceAnalyticsCard,
+    LoadingComponent
+  },
+  computed: {
+    loading() {
+      return this.$store.state.loading
+    }
+  },
   data() {
     return {
       errors: [],
-      loading: [],
 
       categoryBalanceAnalyticsData: null,
       transfers: null,
     }
   },
-  components: {BaseGrid, CategoryBalanceAnalyticsCard},
   methods: {
     getCategoryBalanceAnalyticsData() {
-      this.setLoading(['categoryBalanceAnalyticsData'])
+      this.$store.commit('setLoading', ['categoryBalanceAnalyticsData'])
 
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('bearer_token')}`;
       this.axios.defaults.headers.common['Content-Type'] = 'application/json'
@@ -55,12 +71,11 @@ export default {
             }
           })
           .finally(() => {
-            this.removeLoading(['categoryBalanceAnalyticsData'])
+            this.$store.commit('unsetLoading', ['categoryBalanceAnalyticsData'])
           })
-
     },
     getTransfers() {
-      this.setLoading(['transfers'])
+      this.$store.commit('setLoading', ['transfer'])
 
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('bearer_token')}`;
       this.axios.defaults.headers.common['Content-Type'] = 'application/json'
@@ -79,33 +94,13 @@ export default {
             }
           })
           .finally(() => {
-            this.removeLoading(['transfers'])
+            this.$store.commit('unsetLoading', ['transfer'])
           })
     },
 
     isLoading(key) {
       return this.loading.includes(key)
     },
-    setLoading(keys) {
-      keys.forEach((key) => {
-        this.loading.push(key)
-      })
-
-      return this.loading
-    },
-    removeLoading(keys) {
-      keys.forEach((key) => {
-        for( var i = 0; i < this.loading.length; i++){
-
-          if ( this.loading[i] === key) {
-
-            this.loading.splice(i, 1);
-          }
-        }
-      })
-
-      return this.loading
-    }
   },
   created() {
     this.getCategoryBalanceAnalyticsData()

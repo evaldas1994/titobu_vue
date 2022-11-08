@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container mt-4">
-      <div class="row">
+      <div class="row position-relative">
         <div class="col-12 col-sm-6 col col-md-3">
           <div class="mb-3">
             <label for="name" class="form-label">Pavadinimas</label>
@@ -46,9 +46,7 @@
             <small v-if="errors['account_id']"  class="font-italic error">Bloga sąskaita</small>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col d-flex align-items-end justify-content-end w-100">
+        <div class="col-12 d-flex align-items-end justify-content-end">
           <button @click="submit()" class="btn btn-primary" type="button" :disabled="isLoading('category') || isLoading('account') || isLoading('submit')">
           <span v-if="isLoading('category') || isLoading('account') || isLoading('submit')" class="spinner-border spinner-border-sm" role="status"
                 aria-hidden="true"></span>
@@ -56,28 +54,35 @@
           </button>
         </div>
       </div>
-      <div class="row mt-4">
+      <div class="row mt-4 position-relative">
+        <LoadingComponent
+            v-if="isLoading('transfer')"
+        />
         <base-grid
+            v-else
             :items="transfers"
             :headers="['Nr.', 'Pavadinimas', 'Kaina', 'Kategorija', 'Sąskaita', 'Data']"
             :columns="['id', 'name', 'amount', 'category_name', 'account_name', 'created_at']"
         />
       </div>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
 
 import BaseGrid from "@/components/app/grid/BaseGrid.vue";
+import LoadingComponent from "@/components/app/LoadingComponent";
 
 export default {
   name: "TransferCreate",
-  components: {BaseGrid},
+  components: {
+    BaseGrid,
+    LoadingComponent
+  },
   data() {
     return {
       errors: [],
-      loading: [],
       model: {
         category_id: this.$route.params.category_id ? this.$route.params.category_id : 2,
         account_id: 1,
@@ -93,11 +98,14 @@ export default {
     },
     selectClass() {
       return ['form-control', 'form-select', this.errors.length ? 'error' : null].join(' ')
+    },
+    loading() {
+      return this.$store.state.loading
     }
   },
   methods: {
     getCategoryBalanceAnalyticsData() {
-      this.setLoading(['categoryBalanceAnalyticsData'])
+      this.$store.commit('setLoading', ['categoryBalanceAnalyticsData'])
 
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('bearer_token')}`;
       this.axios.defaults.headers.common['Content-Type'] = 'application/json'
@@ -116,12 +124,12 @@ export default {
             }
           })
           .finally(() => {
-            this.removeLoading(['categoryBalanceAnalyticsData'])
+            this.$store.commit('unsetLoading', ['categoryBalanceAnalyticsData'])
           })
 
     },
     getTransfers() {
-      this.setLoading(['transfers'])
+      this.$store.commit('setLoading', ['transfer'])
 
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('bearer_token')}`;
       this.axios.defaults.headers.common['Content-Type'] = 'application/json'
@@ -140,11 +148,11 @@ export default {
             }
           })
           .finally(() => {
-            this.removeLoading(['transfers'])
+            this.$store.commit('unsetLoading', ['transfer'])
           })
     },
     getCategories() {
-      this.setLoading(['category'])
+      this.$store.commit('setLoading', ['category'])
 
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('bearer_token')}`;
       this.axios.defaults.headers.common['Content-Type'] = 'application/json'
@@ -163,11 +171,11 @@ export default {
             }
           })
           .finally(() => {
-            this.removeLoading(['category'])
+            this.$store.commit('unsetLoading', ['category'])
           })
     },
     getAccounts() {
-      this.setLoading(['account'])
+      this.$store.commit('setLoading', ['account'])
 
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('bearer_token')}`;
       this.axios.defaults.headers.common['Content-Type'] = 'application/json'
@@ -186,34 +194,14 @@ export default {
             }
           })
           .finally(() => {
-            this.removeLoading(['account'])
+            this.$store.commit('unsetLoading', ['account'])
           })
     },
     isLoading(key) {
       return this.loading.includes(key)
     },
-    setLoading(keys) {
-      keys.forEach((key) => {
-        this.loading.push(key)
-      })
-
-      return this.loading
-    },
-    removeLoading(keys) {
-      keys.forEach((key) => {
-        for (var i = 0; i < this.loading.length; i++) {
-
-          if (this.loading[i] === key) {
-
-            this.loading.splice(i, 1);
-          }
-        }
-      })
-
-      return this.loading
-    },
     submit() {
-      this.setLoading(['submit'])
+      this.$store.commit('setLoading', ['submit'])
 
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('bearer_token')}`;
       this.axios.defaults.headers.common['Content-Type'] = 'application/json'
@@ -235,7 +223,7 @@ export default {
             }
           })
           .finally(() => {
-            this.removeLoading(['submit'])
+            this.$store.commit('unsetLoading', ['submit'])
           })
     },
   },

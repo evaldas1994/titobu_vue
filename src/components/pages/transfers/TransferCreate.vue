@@ -17,19 +17,7 @@
           </div>
         </div>
         <div class="col-12 col-sm-6 col col-md-3">
-          <div v-if="!$route.params.category_id" class="mb-3">
-            <label for="category_id" id="category_id" class="form-label">Kategorija</label>
-            <select id="category_id" :class="selectClass" aria-label="category_id" v-model="model.category_id">
-              <option
-                  v-for="category in this.categories"
-                  :key="category.id"
-                  :value="category.id"
-              >
-                {{ category.name }}
-              </option>
-            </select>
-            <small v-if="errors['category_id']"  class="font-italic error">Bloga kategorija</small>
-          </div>
+
         </div>
         <div class="col-12 col-sm-6 col col-md-3">
           <div class="mb-3">
@@ -85,10 +73,9 @@ export default {
       errors: [],
       model: {
         category_id: this.$route.params.category_id ? this.$route.params.category_id : 2,
-        account_id: 1,
       },
       transfers: null,
-      categories: [],
+      category: [],
       accounts: []
     }
   },
@@ -151,14 +138,14 @@ export default {
             this.$store.commit('unsetLoading', ['transfer'])
           })
     },
-    getCategories() {
+    getCategory() {
       this.$store.commit('setLoading', ['category'])
 
       this.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('bearer_token')}`;
       this.axios.defaults.headers.common['Content-Type'] = 'application/json'
       this.axios.defaults.headers.common['Accept'] = 'application/json'
 
-      this.axios.get(this.baseUrl + '/api/categories')
+      this.axios.get(this.baseUrl + '/api/categories/' + this.$route.params.category_id)
           .catch((error) => {
             if (error.response.status === 401) {
               localStorage.removeItem('bearer_token')
@@ -167,7 +154,8 @@ export default {
           })
           .then((response) => {
             if (response.status === 200) {
-              this.categories = response.data.data.filter((item) => item.type === 'expenses')
+              this.category = response.data
+              this.model.account_id = this.category.account_id
             }
           })
           .finally(() => {
@@ -190,7 +178,7 @@ export default {
           })
           .then((response) => {
             if (response.status === 200) {
-              this.accounts = response.data.data.filter((item) => item.user_id === 1)
+              this.accounts = response.data.data
             }
           })
           .finally(() => {
@@ -230,7 +218,7 @@ export default {
   created() {
     this.getCategoryBalanceAnalyticsData()
     this.getTransfers()
-    this.getCategories()
+    this.getCategory()
     this.getAccounts()
     console.log(this.baseUrl)
   }

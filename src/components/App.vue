@@ -29,17 +29,10 @@ export default {
 </script>
 
 <style scoped>
-.bg-color {
-  background: #F5F7FB;
-  width: 100%;
-  min-height: 100%;
-}
-
 .bg-image {
   background-image: url('https://image.winudf.com/v2/image/Y29tLmF3ZXNvbWV3YWxscGFwZXIuY2hyaXN0bWFzNTkyMF9zY3JlZW5fM184cncwdmIzMw/screen-3.jpg?fakeurl=1&type=.webp');
   background-repeat: no-repeat;
-  background-position-x: center;
-  background-position-y: top;
+  background-position: center;
   background-size: cover;
   background-attachment: fixed;
 }

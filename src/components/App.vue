@@ -1,5 +1,5 @@
 <template>
-  <div class="body bg-image">
+  <div class="bg-image vh-100 vw-100">
     <div v-if="auth">
       <NavigationComponent/>
       <router-view/>
@@ -29,11 +29,6 @@ export default {
 </script>
 
 <style scoped>
-.body {
-  width: 100vw;
-  height: 100vh;
-}
-
 .bg-image {
   background-image: url('https://image.winudf.com/v2/image/Y29tLmF3ZXNvbWV3YWxscGFwZXIuY2hyaXN0bWFzNTkyMF9zY3JlZW5fM184cncwdmIzMw/screen-3.jpg?fakeurl=1&type=.webp');
   background-repeat: no-repeat;

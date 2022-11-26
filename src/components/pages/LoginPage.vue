@@ -90,10 +90,11 @@ export default {
 
 <style scoped>
 .custom_card {
-  background: #FFFFFF;
+  background-color:rgba(255, 255, 255, 0.7);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
-  width: 700px;
+  width: 80vw;
+  max-width: 600px;
 }
 
 .error {

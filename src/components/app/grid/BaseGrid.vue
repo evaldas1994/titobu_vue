@@ -40,8 +40,7 @@ export default {
 
 <style scoped>
 .custom_card {
-  /*background: #25680F;*/
-  color: #CCCCCC;
+  background-color:rgba(255, 255, 255, 0.7);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
 }
@@ -49,7 +48,8 @@ export default {
   font-weight: 700;
   font-size: 13px;
   line-height: 16px;
-  color: #8898AA;
+  /*color: #8898AA;*/
+  color: #2f49a6;
 }
 
 .grid_details {

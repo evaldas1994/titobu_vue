@@ -31,7 +31,7 @@ export default {
 <style scoped>
 .bg-image {
   background-image: url('https://image.winudf.com/v2/image/Y29tLmF3ZXNvbWV3YWxscGFwZXIuY2hyaXN0bWFzNTkyMF9zY3JlZW5fM184cncwdmIzMw/screen-3.jpg?fakeurl=1&type=.webp');
-  background-repeat: repeat;
+  background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   background-attachment: fixed;

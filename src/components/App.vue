@@ -32,7 +32,7 @@ export default {
 .bg-color {
   background: #F5F7FB;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 .bg-image {

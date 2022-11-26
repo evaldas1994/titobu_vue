@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-color bg-image">
+  <div class="bg-image">
     <div v-if="auth">
       <NavigationComponent/>
       <router-view/>

@@ -1,22 +1,27 @@
 <template>
 <div>
-  <div class="container">
-    <div class="row mt-4 position-relative" style="min-height: 150px">
-      <LoadingComponent
-          v-if="isLoading('categoryBalanceAnalyticsData')"
-      />
-      <div v-else v-for="item in categoryBalanceAnalyticsData" :key="item" class="col-12 col-sm-6 col-md-4 col-xl-3">
-                <CategoryBalanceAnalyticsCard
-                  :item="item"
+  <LoadingComponent
+      v-if="isLoading('transfer')"
+  />
+  <div v-else class="container">
+    <div class="row mt-4 position-relative">
+      <div v-for="item in categoryBalanceAnalyticsData" :key="item" class="col-12 col-sm-6 col-md-4 col-xl-3">
+        <CategoryBalanceAnalyticsCard3
+            v-show="item.purpose_id === 3"
+            :item="item"
+        />
+      </div>
+    </div>
+    <div class="row mt-4 position-relative">
+      <div v-for="item in categoryBalanceAnalyticsData" :key="item" class="col-12 col-sm-6 col-md-4 col-xl-3">
+                <CategoryBalanceAnalyticsCard1
+                    v-show="item.purpose_id === 1"
+                    :item="item"
                 />
       </div>
     </div>
-    <div class="row mt-4 position-relative" style="min-height: 150px">
-      <LoadingComponent
-          v-if="isLoading('transfer')"
-      />
+    <div class="row mt-4 position-relative">
       <base-grid
-        v-else
         :items="transfers"
         :headers="['Nr.', 'Pavadinimas', 'Kaina', 'Kategorija', 'Sąskaita', 'Data']"
         :columns="['id', 'name', 'amount', 'category_name', 'account_name', 'created_at']"
@@ -27,14 +32,16 @@
 </template>
 
 <script>
-import CategoryBalanceAnalyticsCard from "@/components/analytics/CategoryBalanceAnalyticsCard.vue";
+import CategoryBalanceAnalyticsCard1 from "@/components/analytics/CategoryBalanceAnalyticsCard1.vue";
+import CategoryBalanceAnalyticsCard3 from "@/components/analytics/CategoryBalanceAnalyticsCard3.vue";
 import BaseGrid from "@/components/app/grid/BaseGrid.vue";
 import LoadingComponent from "@/components/app/LoadingComponent.vue";
 export default {
   name: "HomePage",
   components: {
     BaseGrid,
-    CategoryBalanceAnalyticsCard,
+    CategoryBalanceAnalyticsCard1,
+    CategoryBalanceAnalyticsCard3,
     LoadingComponent
   },
   computed: {

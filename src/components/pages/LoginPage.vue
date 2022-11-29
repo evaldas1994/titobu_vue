@@ -1,5 +1,5 @@
 <template>
-<div class="vh-100 vw-100 d-flex justify-content-center align-items-center">
+<div class="vh-100 vw-100 d-flex justify-content-center align-items-center bg-image">
   <div class="card custom_card">
     <h5 class="card-header">Prisijungimas</h5>
     <div class="card-body">
@@ -104,5 +104,18 @@ export default {
 
 .font-italic {
   font-style: italic;
+}
+
+.bg-image {
+  /* The image used */
+  background-image: url("https://images.unsplash.com/photo-1543772098-15fdfec7ecff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1010&q=80");
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 </style>

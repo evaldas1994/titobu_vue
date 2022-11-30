@@ -39,18 +39,21 @@ import VueAxios from 'vue-axios'
 
 import App from './components/App.vue'
 
-
 import router from "./router";
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faUserSecret, faPiggyBank } from '@fortawesome/free-solid-svg-icons'
+library.add(faUserSecret, faPiggyBank)
 
 let app = createApp(App);
 
 // app.config.globalProperties.baseUrl = 'http://back-titobu.test'
 app.config.globalProperties.baseUrl = 'http://back.titobu.eu'
-    app
+app
+    .component('font-awesome-icon', FontAwesomeIcon)
     .use(VueAxios, axios)
     .use(router)
     .use(store)
     .mount('#app')
 
-
-import "bootstrap/dist/js/bootstrap"

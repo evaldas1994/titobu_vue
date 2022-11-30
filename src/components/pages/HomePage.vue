@@ -4,8 +4,8 @@
       v-if="isLoading('transfer')"
   />
   <div v-else class="container">
-    <div class="row mt-4 position-relative">
-      <div v-for="item in categoryBalanceAnalyticsData" :key="item" class="col-12 col-sm-6 col-md-4 col-xl-3">
+    <div class="row mt-4 position-relative overflow-hidden">
+      <div v-for="item in categoryBalanceAnalyticsData" :key="item" class="d-flex overflow-scroll hide-scrollbar">
         <CategoryBalanceAnalyticsCard3
             v-show="item.purpose_id === 3"
             :item="item"
@@ -42,7 +42,7 @@ export default {
     BaseGrid,
     CategoryBalanceAnalyticsCard1,
     CategoryBalanceAnalyticsCard3,
-    LoadingComponent
+    LoadingComponent,
   },
   computed: {
     loading() {
@@ -129,5 +129,15 @@ export default {
 
 .router-link:hover {
   color: #98d780;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 </style>

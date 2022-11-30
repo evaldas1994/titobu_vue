@@ -1,9 +1,9 @@
 <template>
 <div>
-  <div class="my-2">
+  <div class="my-2 me-3">
     <div class="card custom_card p-0">
-      <div @click="iconActive = !iconActive" class="card-body overflow-hidden p-0 d-flex align-items-center justify-content-center">
-          <i v-if="!iconActive" class="bi bi-piggy-bank icon-inactive"></i>
+      <div @click="iconActive = !iconActive" class="card-body overflow-hidden p-0 m-0 d-flex align-items-center justify-content-center icon">
+        <font-awesome-icon v-if="!iconActive" :icon="item.icon" />
         <div v-else class="balance_details d-flex justify-content-around align-items-center flex-md-column icon">
           <div :class="item.account_balance < 0 ? 'title text-danger' : 'title'">{{ item.account_balance }}</div>
           <div :class="item.balance_month === item.balance ? 'title text-success' : 'title text-danger' ">{{ item.balance_month }}</div>

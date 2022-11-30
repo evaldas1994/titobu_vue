@@ -5,8 +5,9 @@
   />
   <div v-else class="container">
     <div class="row mt-4 position-relative overflow-hidden">
-      <div v-for="item in categoryBalanceAnalyticsData" :key="item" class="d-flex overflow-scroll hide-scrollbar">
+      <div class="d-flex overflow-scroll hide-scrollbar">
         <CategoryBalanceAnalyticsCard3
+            v-for="item in categoryBalanceAnalyticsData" :key="item"
             v-show="item.purpose_id === 3"
             :item="item"
         />

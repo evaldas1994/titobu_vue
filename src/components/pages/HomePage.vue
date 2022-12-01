@@ -5,7 +5,7 @@
   />
   <div v-else class="container">
     <div class="row mt-4 position-relative">
-      <div class="col card custom_card d-flex justify-content-center align-items-center">
+      <div class="card custom_card d-flex justify-content-center align-items-center px-1">
         <h1 class="title">{{ categoryBalanceAnalyticsData.total_balance }}</h1>
       </div>
     </div>

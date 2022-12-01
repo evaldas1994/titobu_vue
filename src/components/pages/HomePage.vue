@@ -5,10 +5,9 @@
   />
   <div v-else class="container">
     <div class="row mt-4 position-relative">
-      <div class="card custom_card d-flex justify-content-center align-items-center">
+      <div class="col card custom_card d-flex justify-content-center align-items-center">
         <h1 class="title">{{ categoryBalanceAnalyticsData.total_balance }}</h1>
       </div>
-
     </div>
     <div class="row mt-4 position-relative overflow-hidden">
       <div class="d-flex overflow-scroll hide-scrollbar">

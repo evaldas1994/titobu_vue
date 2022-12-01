@@ -1,7 +1,7 @@
 <template>
 <div>
   <LoadingComponent
-      v-if="isLoading('transfer')"
+      v-if="isLoading('transfer') || isLoading('categoryBalanceAnalyticsData')"
   />
   <div v-else class="container">
     <div class="row mt-4 position-relative">

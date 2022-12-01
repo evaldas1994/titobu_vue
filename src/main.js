@@ -64,8 +64,34 @@ import router from "./router";
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faUserSecret, faPiggyBank } from '@fortawesome/free-solid-svg-icons'
-library.add(faUserSecret, faPiggyBank)
+import {
+    faUserSecret,
+    faReceipt,
+    faLandmarkFlag,
+    faBaby,
+    faBuilding,
+    faCar,
+    faUtensils,
+    faHeartPulse,
+    faShirt,
+    faGift,
+    faSignal,
+    faPiggyBank,
+} from '@fortawesome/free-solid-svg-icons'
+library.add(
+    faUserSecret,
+    faReceipt,
+    faLandmarkFlag,
+    faBaby,
+    faBuilding,
+    faCar,
+    faUtensils,
+    faHeartPulse,
+    faShirt,
+    faGift,
+    faSignal,
+    faPiggyBank,
+)
 
 let app = createApp(App);
 

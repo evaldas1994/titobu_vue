@@ -6,13 +6,15 @@ const store = createStore({
     state () {
         return {
             count: 0,
-            loading: []
+            loading: [],
+            activeCategories: [],
         }
     },
     mutations: {
         increment (state) {
             state.count++
         },
+
         setLoading (state, loading) {
             let localLoading = state.loading
             loading.forEach((item) => {
@@ -30,6 +32,25 @@ const store = createStore({
 
             })
             state.loading = [...new Set(localLoading)]
+        },
+
+        setActiveCategories (state, categories) {
+
+            let localActiveCategories = state.activeCategories
+            categories.forEach((item) => {
+                localActiveCategories.push(item)
+            })
+            state.activeCategories = [...new Set(localActiveCategories)]
+        },
+        unsetActiveCategories (state, categories) {
+            let localActiveCategories = state.activeCategories
+            categories.forEach((item) => {
+                let index = localActiveCategories.indexOf(item);
+                if (index !== -1) {
+                    localActiveCategories.splice(index, 1);
+                }
+            })
+            state.activeCategories = [...new Set(localActiveCategories)]
         }
     }
 })

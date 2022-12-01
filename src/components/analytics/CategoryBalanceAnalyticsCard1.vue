@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-show="isActiveCategories(item.id)" class="col-12 col-sm-6 col-md-4 col-xl-3">
   <div class="my-2">
     <div class="card custom_card">
       <div class="card-body overflow-hidden">
@@ -78,8 +78,16 @@ export default {
   computed: {
     balanceErrorClass() {
       return ['balance_details', 'text-nowrap', 'overflow-hidden', parseFloat(this.item.balance_today) < 0 ? 'error' : null].join(' ')
+    },
+    activeCategories() {
+      return this.$store.state.activeCategories
     }
   },
+  methods: {
+    isActiveCategories(key) {
+      return this.activeCategories.includes(key)
+    },
+  }
 }
 </script>
 

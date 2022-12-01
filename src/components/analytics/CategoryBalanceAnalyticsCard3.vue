@@ -2,9 +2,10 @@
 <div>
   <div class="my-2 me-3">
     <div class="card custom_card p-0">
-      <div @click="iconActive = !iconActive" class="card-body overflow-hidden p-0 m-0 d-flex align-items-center justify-content-center icon">
-        <font-awesome-icon v-if="!iconActive" :icon="item.icon" />
-        <div v-else class="balance_details d-flex justify-content-around align-items-center flex-md-column icon">
+      <div @click="!isActiveCategories(item.id) ? $store.commit('setActiveCategories', [item.id]) : $store.commit('unsetActiveCategories', [item.id])" class="card-body overflow-hidden p-0 m-0 d-flex align-items-center justify-content-center icon">
+        <font-awesome-icon v-if="!isActiveCategories(item.id)" :icon="item.icon" />
+        <div v-else class="balance_details d-flex justify-content-around align-items-center flex-column icon">
+          <font-awesome-icon class="icon-small" :icon="item.icon" />
           <div :class="item.account_balance < 0 ? 'title text-danger' : 'title'">{{ item.account_balance }}</div>
           <div :class="item.balance_month === item.balance ? 'title text-success' : 'title text-danger' ">{{ item.balance_month }}</div>
         </div>
@@ -22,14 +23,27 @@ export default {
   },
   data() {
     return {
-      iconActive: true,
+      iconActive: false,
     }
   },
   computed: {
     balanceErrorClass() {
       return ['balance_details', 'text-nowrap', 'overflow-hidden', parseFloat(this.item.balance_today) < 0 ? 'error' : null].join(' ')
     },
+
+    activeCategories() {
+      return this.$store.state.activeCategories
+    }
   },
+  methods: {
+    clicked(id) {
+      this.$store.commit('setActiveCategories', [id])
+      console.log('hit ' + id)
+    },
+    isActiveCategories(key) {
+      return this.activeCategories.includes(key)
+    },
+  }
 }
 </script>
 
@@ -70,10 +84,11 @@ export default {
   cursor: pointer;
   color: #00523F;
 }
-.icon-inactive {
-  font-size: 40px;
+
+.icon-small {
+  font-size: 20px;
   cursor: pointer;
-  color: #d2d2d2;
+  /*color: #d2d2d2;*/
 }
 .icon:hover {
   color: #00BF93;

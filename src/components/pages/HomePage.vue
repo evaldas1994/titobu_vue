@@ -4,28 +4,32 @@
       v-if="isLoading('transfer')"
   />
   <div v-else class="container">
+    <div class="row mt-4 position-relative">
+      <div class="card custom_card d-flex justify-content-center align-items-center">
+        <h1 class="title">{{ categoryBalanceAnalyticsData.total_balance }}</h1>
+      </div>
+
+    </div>
     <div class="row mt-4 position-relative overflow-hidden">
       <div class="d-flex overflow-scroll hide-scrollbar">
         <CategoryBalanceAnalyticsCard3
-            v-for="item in categoryBalanceAnalyticsData" :key="item"
-            v-show="item.purpose_id === 3"
+            v-for="item in categoryBalanceAnalyticsData.data" :key="item"
             :item="item"
         />
       </div>
     </div>
-    <div class="row mt-4 position-relative">
-      <div v-for="item in categoryBalanceAnalyticsData" :key="item" class="col-12 col-sm-6 col-md-4 col-xl-3">
-                <CategoryBalanceAnalyticsCard1
-                    v-show="item.purpose_id === 1"
-                    :item="item"
-                />
+    <div class="row mt-4 position-relative d-flex">
+        <CategoryBalanceAnalyticsCard1
+            v-for="item in categoryBalanceAnalyticsData.data" :key="item"
+            :item="item"
+        />
       </div>
-    </div>
     <div class="row mt-4 position-relative">
       <base-grid
         :items="transfers"
         :headers="['Nr.', 'Pavadinimas', 'Kaina', 'Kategorija', 'Sąskaita', 'Data']"
         :columns="['id', 'name', 'amount', 'category_name', 'account_name', 'created_at']"
+        v-show="false"
       />
     </div>
   </div>
@@ -48,7 +52,7 @@ export default {
   computed: {
     loading() {
       return this.$store.state.loading
-    }
+    },
   },
   data() {
     return {
@@ -75,7 +79,7 @@ export default {
           })
           .then((response) => {
             if (response.status === 200) {
-              this.categoryBalanceAnalyticsData = response.data.data
+              this.categoryBalanceAnalyticsData = response.data
             }
           })
           .finally(() => {
@@ -140,5 +144,18 @@ export default {
 .hide-scrollbar {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+
+.custom_card {
+  background-color:rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 50px;
+  /*line-height: 16px;*/
+  color: #8898AA;
 }
 </style>

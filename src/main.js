@@ -77,6 +77,7 @@ import {
     faGift,
     faSignal,
     faPiggyBank,
+    faBook,
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
     faUserSecret,
@@ -91,6 +92,7 @@ library.add(
     faGift,
     faSignal,
     faPiggyBank,
+    faBook,
 )
 
 let app = createApp(App);

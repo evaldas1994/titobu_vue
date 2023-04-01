@@ -145,8 +145,8 @@ library.add(
 
 let app = createApp(App);
 
-app.config.globalProperties.baseUrl = 'http://titobu.test'
-// app.config.globalProperties.baseUrl = 'http://back.titobu.eu'
+// app.config.globalProperties.baseUrl = 'http://titobu.test'
+app.config.globalProperties.baseUrl = 'http://back.titobu.eu'
 app
     .component('font-awesome-icon', FontAwesomeIcon)
     .use(VueAxios, axios)

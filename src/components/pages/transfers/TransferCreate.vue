@@ -79,6 +79,11 @@ export default {
       accounts: []
     }
   },
+  watch: {
+    transfers(newValue) {
+      console.log(newValue);
+    }
+  },
   computed: {
     inputClass() {
       return ['form-control', this.errors.length ? 'error' : null].join(' ')
@@ -132,6 +137,7 @@ export default {
           .then((response) => {
             if (response.status === 200) {
               this.transfers = response.data.data
+              console.log(response.data.data);
             }
           })
           .finally(() => {

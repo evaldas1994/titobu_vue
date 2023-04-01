@@ -1,160 +1,147 @@
 <template>
-<div>
-  <LoadingComponent
-      v-if="isLoading('transfer') || isLoading('categoryBalanceAnalyticsData')"
-  />
-  <div v-else class="container">
-    <div class="row mt-4 position-relative">
-      <div class="card custom_card d-flex justify-content-center align-items-center px-1">
-        <h1 class="title">{{ categoryBalanceAnalyticsData.total_balance }}</h1>
+  <div>
+    <div>
+      <div class="container">
+        <!--        Top Title-->
+        <div class="row mt-10px">
+          <div class="top-text d-flex justify-content-center align-items-center color-black-icon text-center"><span>{{ formatAmount(total) }}</span></div>
+        </div>
+
+        <!--        Cube-->
+        <div class="row mt-10px">
+          <div class="col-4">
+            <base-cube
+                :title1="formatAmount(totalIn)"
+                bg="green"
+                @click="$router.push('/earnings')"
+                :loading="isLoading(['mounted'])"
+            />
+          </div>
+          <div class="col-4">
+            <base-cube
+                :title1="formatAmount(totalIn - totalOut)"
+                bg="yellow"
+                :loading="isLoading(['mounted'])"
+            />
+          </div>
+          <div class="col-4">
+            <base-cube
+                :title1="formatAmount(totalOut)"
+                bg="red"
+                @click="$router.push('/expenses')"
+                :loading="isLoading(['mounted'])"
+            />
+          </div>
+        </div>
+
+        <!--        Divider-->
+        <div class="row mt-30px">
+          <div class="col-12">
+            <div class="divider"></div>
+          </div>
+        </div>
+
+        <!--        Circles-->
+        <div class="row mt-20px">
+          <div class="col-6 mt-10px"
+               v-for="(item, index) in categoryBalanceAnalyticsData"
+               :key="index"
+          >
+            <category-balance-analytics-card1
+              :item="item"
+            />
+          </div>
+        </div>
+
+        <!--        Divider-->
+        <div class="row mt-30px">
+          <div class="col-12">
+            <div class="divider"></div>
+          </div>
+        </div>
+
       </div>
-    </div>
-    <div class="row mt-4 position-relative overflow-hidden">
-      <div class="d-flex overflow-scroll hide-scrollbar">
-        <CategoryBalanceAnalyticsCard3
-            v-for="item in categoryBalanceAnalyticsData.data" :key="item"
-            :item="item"
-        />
-      </div>
-    </div>
-    <div class="row mt-4 position-relative d-flex">
-        <CategoryBalanceAnalyticsCard1
-            v-for="item in categoryBalanceAnalyticsData.data" :key="item"
-            :item="item"
-        />
-      </div>
-    <div class="row mt-4 position-relative">
-      <base-grid
-        :items="transfers"
-        :headers="['Nr.', 'Pavadinimas', 'Kaina', 'Kategorija', 'Sąskaita', 'Data']"
-        :columns="['id', 'name', 'amount', 'category_name', 'account_name', 'created_at']"
-        v-show="false"
-      />
     </div>
   </div>
-</div>
 </template>
 
 <script>
-import CategoryBalanceAnalyticsCard1 from "@/components/analytics/CategoryBalanceAnalyticsCard1.vue";
-import CategoryBalanceAnalyticsCard3 from "@/components/analytics/CategoryBalanceAnalyticsCard3.vue";
-import BaseGrid from "@/components/app/grid/BaseGrid.vue";
-import LoadingComponent from "@/components/app/LoadingComponent.vue";
+import { mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
+
+import BaseCube from '@/components/app/cube/BaseCube.vue';
+import CategoryBalanceAnalyticsCard1 from '@/components/analytics/CategoryBalanceAnalyticsCard1.vue';
+import axios from "axios";
+
 export default {
-  name: "HomePage",
+  name: "ExpensesPage",
   components: {
-    BaseGrid,
+    BaseCube,
     CategoryBalanceAnalyticsCard1,
-    CategoryBalanceAnalyticsCard3,
-    LoadingComponent,
-  },
-  computed: {
-    loading() {
-      return this.$store.state.loading
-    },
   },
   data() {
     return {
-      errors: [],
+      total: 0,
+      totalIn: 0,
+      totalOut: 0,
 
-      categoryBalanceAnalyticsData: null,
-      transfers: null,
+      categoryBalanceAnalyticsData: [],
     }
   },
+  computed: {
+    ...mapGetters([
+      'isLoading',
+      'loading',
+      'formatAmount',
+    ]),
+  },
+
   methods: {
-    getCategoryBalanceAnalyticsData() {
-      this.$store.commit('setLoading', ['categoryBalanceAnalyticsData'])
-
-      this.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('bearer_token')}`;
-      this.axios.defaults.headers.common['Content-Type'] = 'application/json'
-      this.axios.defaults.headers.common['Accept'] = 'application/json'
-
-      this.axios.get(this.baseUrl + '/api/analytics/out-category-balance')
-          .catch((error) => {
-            if (error.response.status === 401) {
-              localStorage.removeItem('bearer_token')
-              window.location.href = '/'
-            }
-          })
-          .then((response) => {
-            if (response.status === 200) {
-              this.categoryBalanceAnalyticsData = response.data
-            }
-          })
-          .finally(() => {
-            this.$store.commit('unsetLoading', ['categoryBalanceAnalyticsData'])
-          })
-    },
-    getTransfers() {
-      this.$store.commit('setLoading', ['transfer'])
-
-      this.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('bearer_token')}`;
-      this.axios.defaults.headers.common['Content-Type'] = 'application/json'
-      this.axios.defaults.headers.common['Accept'] = 'application/json'
-
-      this.axios.get(this.baseUrl + '/api/transfers')
-          .catch((error) => {
-            if (error.response.status === 401) {
-              localStorage.removeItem('bearer_token')
-              window.location.href = '/'
-            }
-          })
-          .then((response) => {
-            if (response.status === 200) {
-              this.transfers = response.data.data
-            }
-          })
-          .finally(() => {
-            this.$store.commit('unsetLoading', ['transfer'])
-          })
-    },
-
-    isLoading(key) {
-      return this.loading.includes(key)
-    },
+    ...mapActions([
+      'setLoading',
+      'unsetLoading',
+    ]),
   },
   created() {
-    this.getCategoryBalanceAnalyticsData()
-    this.getTransfers()
+    console.log(this.baseUrl);
+  },
+  mounted() {
+    this.setLoading(['mounted'])
+
+    console.log(localStorage.getItem('bearer_token'))
+    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('bearer_token')}`;
+    axios.defaults.headers.common['Content-Type'] = 'application/json'
+    axios.defaults.headers.common['Accept'] = 'application/json'
+
+    axios
+        .get('http://titobu.test/api/analytics/analytic-by-category')
+        .then(response => {
+          this.categoryBalanceAnalyticsData = response.data.data
+
+          this.total = response.data.total
+          this.totalIn = response.data.total_earnings
+          this.totalOut = response.data.total_expenses
+
+          console.log(response)
+          this.unsetLoading(['mounted'])
+        })
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+        .finally(() => this.loading = false)
   }
 }
 </script>
 
 <style scoped>
-.icon {
-  font-size: 40px;
-}
-
-.router-link {
-  color: #72CC50;
-  text-decoration: none;
-  font-size: 40px;
-}
-
-.router-link:hover {
-  color: #98d780;
-}
-
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.hide-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-.custom_card {
-  background-color:rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 8px;
-}
-
-.title {
+.top-text {
+  font-style: normal;
   font-weight: 700;
-  font-size: 50px;
-  /*line-height: 16px;*/
-  color: #8898AA;
+  font-size: 64px;
+  line-height: 77px;
+  display: flex;
+  align-items: center;
+  text-align: center;
 }
 </style>

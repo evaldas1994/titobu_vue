@@ -1,18 +1,25 @@
 import "bootstrap/dist/css/bootstrap.css"
+import moment from 'moment'
+import numeral from 'numeral'
+
 import { createApp } from 'vue'
 import { createStore } from 'vuex'
 
 const store = createStore({
     state () {
         return {
+            notification: null,
             count: 0,
             loading: [],
             activeCategories: [],
         }
     },
     mutations: {
-        increment (state) {
-            state.count++
+        setNotification (state, notification) {
+            state.notification = notification
+        },
+        resetNotification (state) {
+            state.notification = null
         },
 
         setLoading (state, loading) {
@@ -29,7 +36,6 @@ const store = createStore({
                 if (index !== -1) {
                     localLoading.splice(index, 1);
                 }
-
             })
             state.loading = [...new Set(localLoading)]
         },
@@ -51,6 +57,47 @@ const store = createStore({
                 }
             })
             state.activeCategories = [...new Set(localActiveCategories)]
+        }
+    },
+    actions: {
+        setNotification ({ commit }, notification) {
+            commit('setNotification', notification)
+        },
+        resetNotification ({ commit }) {
+            commit('resetNotification')
+        },
+        setLoading ({ commit }, loading) {
+            commit('setLoading', loading)
+        },
+        unsetLoading ({ commit }, loading) {
+            commit('unsetLoading', loading)
+        },
+    },
+
+    getters: {
+        notification(state) {
+            return state.notification;
+        },
+
+        isLoading: (state) => (valuesArray) => {
+            return state.loading.some(val => valuesArray.includes(val));
+        },
+        loading (state) {
+            return state.loading;
+        },
+        thisPeriod () {
+            return moment().format('YYYY-MM');
+        },
+        nextPeriod () {
+            return moment().add(1, 'months').format('YYYY-MM');
+        },
+
+        formatAmount: () => (amount) => {
+            return numeral(amount).format('0,0.00').replace(",", " ");
+        },
+        isFloat: () => (amount) => {
+            let pattern = /^-?\d+(\.\d+)?$/;
+            return pattern.test(amount);
         }
     }
 })
@@ -79,6 +126,7 @@ import {
     faPiggyBank,
     faBook,
 } from '@fortawesome/free-solid-svg-icons'
+
 library.add(
     faUserSecret,
     faReceipt,
@@ -97,8 +145,8 @@ library.add(
 
 let app = createApp(App);
 
-// app.config.globalProperties.baseUrl = 'http://back-titobu.test'
-app.config.globalProperties.baseUrl = 'http://back.titobu.eu'
+app.config.globalProperties.baseUrl = 'http://titobu.test'
+// app.config.globalProperties.baseUrl = 'http://back.titobu.eu'
 app
     .component('font-awesome-icon', FontAwesomeIcon)
     .use(VueAxios, axios)

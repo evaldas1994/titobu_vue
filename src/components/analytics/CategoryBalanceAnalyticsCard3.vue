@@ -6,7 +6,7 @@
         <font-awesome-icon v-if="!isActiveCategories(item.id)" :icon="item.icon" />
         <div v-else class="balance_details d-flex justify-content-around align-items-center flex-column icon">
           <font-awesome-icon class="icon-small" :icon="item.icon" />
-          <div :class="item.account_balance < 0 ? 'title text-danger' : 'title'">{{ item.account_balance }}</div>
+          <div :class="item.balance_expenses < 0 ? 'title text-danger' : 'title'">{{ item.balance_expenses }}</div>
           <div :class="item.balance_month === item.balance ? 'title text-success' : 'title text-danger' ">{{ item.balance_month }}</div>
         </div>
       </div>

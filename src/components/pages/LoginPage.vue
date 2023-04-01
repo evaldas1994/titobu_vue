@@ -1,5 +1,5 @@
 <template>
-<div class="vh-100 vw-100 d-flex justify-content-center align-items-center bg-image">
+<div class="vh-100 vw-100 d-flex justify-content-center align-items-center bg">
   <div class="card custom_card">
     <h5 class="card-header">Prisijungimas</h5>
     <div class="card-body">
@@ -88,7 +88,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .custom_card {
   background-color:rgba(255, 255, 255, 0.9);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -108,7 +108,7 @@ export default {
 
 .bg-image {
   /* The image used */
-  background-image: url("https://images.unsplash.com/photo-1543772098-15fdfec7ecff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1010&q=80");
+  background-image: url("https://wallpaperaccess.com/full/313577.jpg");
 
   /* Full height */
   height: 100%;
@@ -118,4 +118,5 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 </style>

@@ -114,7 +114,7 @@ export default {
     axios.defaults.headers.common['Accept'] = 'application/json'
 
     axios
-        .get('http://titobu.test/api/analytics/analytic-by-category')
+        .get(`${this.baseUrl}/api/analytics/analytic-by-category`)
         .then(response => {
           this.categoryBalanceAnalyticsData = response.data.data
 

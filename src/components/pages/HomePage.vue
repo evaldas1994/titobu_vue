@@ -14,7 +14,7 @@
                 </li>
                 <li class="list-group-item color-text-title color-text-card-balance h6 color-black-icon d-flex justify-content-between mb-0">
                   <span class="pe-2">Šis laikotarpis:</span>
-                  <span class="ps-2">{{ formatAmount(totalIn - totalOut) }}</span>
+                  <span class="ps-2">{{ formatAmount(periodIn - periodOut) }}</span>
                 </li>
                 <li class="list-group-item color-text-title color-text-card-balance h6 color-black-icon d-flex justify-content-between mb-0">
                   <span class="pe-2">Taupymai:</span>
@@ -29,7 +29,7 @@
         <div class="row mt-10px px-2">
           <div class="col-4 px-1">
             <base-cube
-                :title1="formatAmount(totalIn)"
+                :title1="formatAmount(periodIn)"
                 bg="green"
                 @click="$router.push('/earnings')"
                 :loading="isLoading(['mounted'])"
@@ -37,14 +37,14 @@
           </div>
           <div class="col-4 px-1">
             <base-cube
-                :title1="formatAmount(totalIn - totalOut)"
+                :title1="formatAmount(periodIn - periodOut)"
                 bg="yellow"
                 :loading="isLoading(['mounted'])"
             />
           </div>
           <div class="col-4 px-1">
             <base-cube
-                :title1="formatAmount(totalOut)"
+                :title1="formatAmount(periodOut)"
                 bg="red"
                 @click="$router.push('/expenses')"
                 :loading="isLoading(['mounted'])"

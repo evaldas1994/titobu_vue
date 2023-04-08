@@ -18,7 +18,7 @@
                 </li>
                 <li class="list-group-item color-text-title color-text-card-balance h6 color-black-icon d-flex justify-content-between mb-0">
                   <span class="pe-2">Taupymai:</span>
-                  <span class="ps-2">{{ formatAmount(0) }}</span>
+                  <span class="ps-2">{{ formatAmount(totalSavings) }}</span>
                 </li>
               </ul>
             </div>
@@ -102,6 +102,7 @@ export default {
       total: 0,
       totalIn: 0,
       totalOut: 0,
+      totalSavings: 0,
       showTitleDetails: false,
 
       categoryBalanceAnalyticsData: [],
@@ -140,6 +141,7 @@ export default {
           this.total = response.data.total
           this.totalIn = response.data.total_earnings
           this.totalOut = response.data.total_expenses
+          this.totalSavings = response.data.total_savings
 
           console.log(response)
           this.unsetLoading(['mounted'])

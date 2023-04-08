@@ -9,7 +9,7 @@
 
         <!--        Cube-->
         <div class="row px-2 mt-10px">
-          <div v-for="category in categoryByType" :key="category.id" class="col-6 px-1">
+          <div v-for="category in categoryByType" :key="category.id" class="col px-1">
             <base-cube
                 :title1="category.name"
                 :title2="category.count"
@@ -125,8 +125,8 @@
           <div class="col-12 px-1">
             <base-grid
                 :items="gridData"
-                :headers="['Nr.', 'Pavadinimas', 'Tipas', 'Paveikslėlis', 'Spalva']"
-                :columns="['id', 'name', 'type_name', 'icon', 'color_name']"
+                :headers="['Pavadinimas', 'Tipas']"
+                :columns="['name', 'type_name']"
             >
               <template #edit="{ item }">
                 <base-icon
@@ -338,6 +338,8 @@ export default {
         'fa-solid fa-baby',
         'fa-solid fa-graduation-cap',
         'fa-solid fa-hand-holding-heart',
+
+        'fa-solid fa-piggy-bank',
       ],
       colors: [
         'blue',
@@ -361,6 +363,10 @@ export default {
         {
           name: 'Pajamos',
           value: 'incomes',
+        },
+        {
+          name: 'Santaupos',
+          value: 'savings',
         },
       ],
     }

@@ -10,7 +10,7 @@
               <ul class="list-group color-text-title">
                 <li class="list-group-item color-text-title color-text-card-balance h6 color-black-icon d-flex justify-content-between mb-0">
                   <span class="pe-2">Praėjęs laikotarpis:</span>
-                  <span class="ps-2">{{ formatAmount(total) }}</span>
+                  <span class="ps-2">{{ formatAmount(periodSavings) }}</span>
                 </li>
                 <li class="list-group-item color-text-title color-text-card-balance h6 color-black-icon d-flex justify-content-between mb-0">
                   <span class="pe-2">Šis laikotarpis:</span>
@@ -100,8 +100,9 @@ export default {
   data() {
     return {
       total: 0,
-      totalIn: 0,
-      totalOut: 0,
+      periodIn: 0,
+      periodOut: 0,
+      periodSavings: 0,
       totalSavings: 0,
       showTitleDetails: false,
 
@@ -139,8 +140,9 @@ export default {
           this.categoryBalanceAnalyticsData = response.data.data
 
           this.total = response.data.total
-          this.totalIn = response.data.total_earnings
-          this.totalOut = response.data.total_expenses
+          this.periodIn = response.data.period_earnings
+          this.periodOut = response.data.period_expenses
+          this.periodSavings = response.data.period_savings
           this.totalSavings = response.data.total_savings
 
           console.log(response)

@@ -1,15 +1,15 @@
 <template>
   <div>
     <div>
-      <div class="container">
+      <div class="container-fluid px-3">
         <!--        Top Title-->
-        <div class="row mt-10px">
+        <div class="row px-2 mt-10px">
           <div class="top-text d-flex justify-content-center align-items-center color-text-title text-center">Kategorijos</div>
         </div>
 
         <!--        Cube-->
-        <div class="row mt-10px">
-          <div v-for="category in categoryByType" :key="category.id" class="col-6">
+        <div class="row px-2 mt-10px">
+          <div v-for="category in categoryByType" :key="category.id" class="col-6 px-1">
             <base-cube
                 :title1="category.name"
                 :title2="category.count"
@@ -20,15 +20,15 @@
         </div>
 
         <!--        Divider-->
-        <div class="row mt-30px">
-          <div class="col-12">
+        <div class="row px-2 mt-30px">
+          <div class="col-12 px-1">
             <div class="divider"/>
           </div>
         </div>
 
         <!--        Form-->
-        <div class="row mt-30px">
-          <div class="col-6">
+        <div class="row px-2 mt-30px">
+          <div class="col-6 px-1">
             <base-input
                 name="name"
                 v-model="model.name"
@@ -37,7 +37,7 @@
                 :errors="errors"
             />
           </div>
-          <div class="col-6">
+          <div class="col-6 px-1">
             <base-select
                 name="type"
                 v-model="model.type"
@@ -49,19 +49,19 @@
             />
           </div>
         </div>
-        <div class="row mt-10px">
-          <div class="col-3">
+        <div class="row px-2 mt-10px">
+          <div class="col-3 px-1">
             <label class="form-label">Rezultatas:</label>
             <div class="container card-32-no-shadow ">
               <div class="row icon-32 text-center">
                 <base-icon
                   :icon="model.icon"
-                  :color-name="model.color"
+                  :color="model.color"
                 />
               </div>
             </div>
           </div>
-          <div class="col-9">
+          <div class="col-9 px-1">
             <div class="container">
               <div class="row">
                 <div class="col-6 ps-0">
@@ -74,7 +74,7 @@
                     >
                       <base-icon
                           :icon="icon"
-                          color-name="black"
+                          color="black"
                           class="px-2"
                           @click="model.icon = icon"
                       />
@@ -88,7 +88,7 @@
                     <div v-for="(color, index) in colors" :key="index">
                       <base-icon
                           icon="fa-solid fa-circle"
-                          :color-name="color"
+                          :color="color"
                           class="px-2"
                           @click="model.color = color"
                       />
@@ -100,29 +100,29 @@
             </div>
           </div>
         </div>
-        <div class="row mt-10px">
-          <div class="col-6">
+        <div class="row px-2 mt-10px">
+          <div class="col-6 px-1">
           </div>
-          <div class="col-6">
+          <div class="col-6 px-1">
             <base-button
                 name="save"
                 label="Saugoti"
-                color-name="green"
+                color="green"
                 @click="save()"
             />
           </div>
         </div>
 
         <!--        Divider-->
-        <div class="row mt-30px">
-          <div class="col-12">
+        <div class="row px-2 mt-30px">
+          <div class="col-12 px-1">
             <div class="divider"></div>
           </div>
         </div>
 
         <!--        Grid-->
-        <div class="row mt-30px">
-          <div class="col-12">
+        <div class="row px-2 mt-30px">
+          <div class="col-12 px-1">
             <base-grid
                 :items="gridData"
                 :headers="['Nr.', 'Pavadinimas', 'Tipas', 'Paveikslėlis', 'Spalva']"
@@ -131,7 +131,7 @@
               <template #edit="{ item }">
                 <base-icon
                     icon="fa-regular fa-pen-to-square"
-                    color-name="blue"
+                    color="blue"
                     class="pe-2"
                     @click="focus=item.id"
                     data-bs-toggle="modal" data-bs-target="#edit"
@@ -140,7 +140,7 @@
               <template #delete="{ item }">
                 <base-icon
                     icon="fa-solid fa-trash-can"
-                    color-name="blue"
+                    color="blue"
                     class="pe-2"
                     @click="focus=item.id"
                     data-bs-toggle="modal" data-bs-target="#delete"
@@ -159,8 +159,8 @@
     >
       <template #content v-if="modelEdit">
         <!--        Form-->
-        <div class="row mt-30px">
-          <div class="col-6">
+        <div class="row px-2 mt-30px">
+          <div class="col-6 px-1">
             <base-input
                 name="name"
                 v-model="modelEdit.name"
@@ -169,7 +169,7 @@
                 :errors="errors"
             />
           </div>
-          <div class="col-6">
+          <div class="col-6 px-1">
             <base-select
                 name="type"
                 v-model="modelEdit.type"
@@ -181,19 +181,19 @@
             />
           </div>
         </div>
-        <div class="row mt-10px">
-          <div class="col-3">
+        <div class="row px-2 mt-10px">
+          <div class="col-3 px-1">
             <label class="form-label">Rezultatas:</label>
             <div class="container card-32-no-shadow ">
               <div class="row icon-32 text-center">
                 <base-icon
                     :icon="modelEdit.icon"
-                    :color-name="modelEdit.color"
+                    :color="modelEdit.color"
                 />
               </div>
             </div>
           </div>
-          <div class="col-9">
+          <div class="col-9 px-1">
             <div class="container">
               <div class="row">
                 <div class="col-6 ps-0">
@@ -206,7 +206,7 @@
                     >
                       <base-icon
                           :icon="icon"
-                          color-name="black"
+                          color="black"
                           class="px-2"
                           @click="modelEdit.icon = icon"
                       />
@@ -220,7 +220,7 @@
                     <div v-for="(color, index) in colors" :key="index">
                       <base-icon
                           icon="fa-solid fa-circle"
-                          :color-name="color"
+                          :color="color"
                           class="px-2"
                           @click="modelEdit.color = color"
                       />
@@ -239,7 +239,7 @@
             data-bs-dismiss="modal"
             name="save"
             label="Grįžti"
-            color-name="blue"
+            color="blue"
         />
       </template>
       <template #submit>
@@ -247,7 +247,7 @@
             data-bs-dismiss="modal"
             name="save"
             label="Saugoti"
-            color-name="red"
+            color="red"
             @click="update()"
         />
       </template>
@@ -270,7 +270,7 @@
             data-bs-dismiss="modal"
             name="save"
             label="Ne"
-            color-name="blue"
+            color="blue"
         />
       </template>
       <template #submit>
@@ -278,7 +278,7 @@
             data-bs-dismiss="modal"
             name="save"
             label="Taip"
-            color-name="red"
+            color="red"
             @click="deleteItem()"
         />
       </template>
@@ -334,6 +334,10 @@ export default {
         'fa-solid fa-laptop-code',
         'fa-solid fa-microchip',
         'fa-solid fa-coins',
+
+        'fa-solid fa-baby',
+        'fa-solid fa-graduation-cap',
+        'fa-solid fa-hand-holding-heart',
       ],
       colors: [
         'blue',

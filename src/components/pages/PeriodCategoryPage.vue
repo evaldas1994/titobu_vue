@@ -1,17 +1,17 @@
 <template>
   <div>
     <div>
-      <div class="container">
+      <div class="container-fluid px-3">
         <!--        Top Title-->
         <div class="row mt-10px">
           <div class="top-text d-flex justify-content-center align-items-center color-text-title text-center">Kategorijų limitai pagal laikotarpius</div>
         </div>
 
         <!--        Cube-->
-        <div class="row mt-10px">
+        <div class="row px-2 mt-10px">
           <div v-for="(item) in periodByCategory"
                :key="item.id"
-               class="col-6"
+               class="col-6 px-1"
           >
             <base-cube
                 :title1="item.period"
@@ -21,11 +21,11 @@
             />
           </div>
         </div>
-        <div class="row mt-20px">
+        <div class="row px-2 mt-20px">
           <div
               v-for="(item, index) in categoriesIn"
               :key="index"
-              class="col-4 mt-10px">
+              class="col-4 px-1 mt-10px">
             <base-cube
                 :title1="item.name.toUpperCase()"
                 :title2="formatAmount(item.pivot.limit)"
@@ -33,7 +33,7 @@
                 @click="model.limit=formatAmount(item.pivot.limit)"
             />
           </div>
-          <div class="row flex-nowrap overflow-scroll" v-if="categoriesInWithoutBalance.length > 0">
+          <div class="row px-2 flex-nowrap overflow-scroll" v-if="categoriesInWithoutBalance.length > 0">
             <div
                 v-for="(item, index) in categoriesInWithoutBalance"
                 :key="index"
@@ -47,11 +47,11 @@
             </div>
           </div>
         </div>
-        <div class="row mt-20px">
+        <div class="row px-2 mt-20px">
           <div
               v-for="(item, index) in categoriesOut"
               :key="index"
-              class="col-4 mt-10px">
+              class="col-4 px-1 mt-10px">
             <base-cube
                 :title1="item.name.toUpperCase()"
                 :title2="formatAmount(item.pivot.limit)"
@@ -59,7 +59,7 @@
                 @click="model.limit=formatAmount(item.pivot.limit)"
             />
           </div>
-          <div class="row flex-nowrap overflow-scroll" v-if="categoriesOutWithoutBalance.length > 0">
+          <div class="row px-2 flex-nowrap overflow-scroll" v-if="categoriesOutWithoutBalance.length > 0">
             <div
                 v-for="(item, index) in categoriesOutWithoutBalance"
                 :key="index"
@@ -75,15 +75,15 @@
         </div>
 
         <!--        Divider-->
-        <div class="row mt-30px">
-          <div class="col-12">
+        <div class="row px-2 mt-30px">
+          <div class="col-12 px-1">
             <div class="divider"/>
           </div>
         </div>
 
         <!--        Form-->
-        <div class="row mt-30px">
-          <div class="col-6">
+        <div class="row px-2 mt-30px">
+          <div class="col-6 px-1">
             <base-input
                 name="limit"
                 v-model="model.limit"
@@ -92,7 +92,7 @@
                 :errors="errors"
             />
           </div>
-          <div class="col-6">
+          <div class="col-6 px-1">
             <base-select
                 name="period_id"
                 v-model="model.period_id"
@@ -104,10 +104,10 @@
             />
           </div>
         </div>
-        <div class="row mt-10px">
-          <div class="col-6">
+        <div class="row px-2 mt-10px">
+          <div class="col-6 px-1">
           </div>
-          <div class="col-6">
+          <div class="col-6 px-1">
             <base-select
                 name="category_id"
                 v-model="model.category_id"
@@ -118,29 +118,29 @@
             />
           </div>
         </div>
-        <div class="row mt-10px">
-          <div class="col-6">
+        <div class="row px-2 mt-10px">
+          <div class="col-6 px-1">
           </div>
-          <div class="col-6">
+          <div class="col-6 px-1">
             <base-button
                 name="save"
                 label="Saugoti"
-                color-name="green"
+                color="green"
                 @click="save()"
             />
           </div>
         </div>
 
         <!--        Divider-->
-        <div class="row mt-30px">
-          <div class="col-12">
+        <div class="row px-2 mt-30px">
+          <div class="col-12 px-1">
             <div class="divider"></div>
           </div>
         </div>
 
         <!--        Grid-->
-        <div class="row mt-30px">
-          <div class="col-12">
+        <div class="row px-2 mt-30px">
+          <div class="col-12 px-1">
             <base-grid
                 :items="gridData"
                 :headers="['Nr.', 'Laikotarpis', 'Kategorija', 'Limitas']"
@@ -149,7 +149,7 @@
               <template #edit="{ item }">
                 <base-icon
                     icon="fa-regular fa-pen-to-square"
-                    color-name="blue"
+                    color="blue"
                     class="pe-2"
                     @click="focus=item.id"
                     data-bs-toggle="modal" data-bs-target="#edit"
@@ -158,7 +158,7 @@
               <template #delete="{ item }">
                 <base-icon
                     icon="fa-solid fa-trash-can"
-                    color-name="blue"
+                    color="blue"
                     class="pe-2"
                     @click="focus=item.id"
                     data-bs-toggle="modal" data-bs-target="#delete"
@@ -177,8 +177,8 @@
     >
       <template #content v-if="modelEdit">
         <!--        Form-->
-        <div class="row">
-          <div class="col-6">
+        <div class="row px-2">
+          <div class="col-6 px-1">
             <base-input
                 name="limit"
                 v-model="modelEdit.limit"
@@ -195,7 +195,7 @@
             data-bs-dismiss="modal"
             name="save"
             label="Grįžti"
-            color-name="blue"
+            color="blue"
         />
       </template>
       <template #submit>
@@ -203,7 +203,7 @@
             data-bs-dismiss="modal"
             name="save"
             label="Saugoti"
-            color-name="red"
+            color="red"
             @click="update()"
         />
       </template>
@@ -226,7 +226,7 @@
             data-bs-dismiss="modal"
             name="save"
             label="Ne"
-            color-name="blue"
+            color="blue"
         />
       </template>
       <template #submit>
@@ -234,7 +234,7 @@
             data-bs-dismiss="modal"
             name="save"
             label="Taip"
-            color-name="red"
+            color="red"
             @click="deleteItem()"
         />
       </template>

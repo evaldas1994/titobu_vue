@@ -1,17 +1,17 @@
 <template>
   <div>
     <div>
-      <div class="container">
+      <div class="container-fluid px-3">
         <!--        Top Title-->
-        <div class="row mt-10px">
+        <div class="row px-2 mt-10px">
           <div class="top-text d-flex justify-content-center align-items-center color-red-icon text-center"><span>{{ formatAmount(total) }}</span></div>
         </div>
 
         <!--        Cube-->
-        <div class="row">
+        <div class="row px-2" v-if="!$route.params.category_id">
           <div v-for="(item, index) in expenseByCategory"
                :key="index"
-               class="col-4 mt-10px"
+               class="col-4 px-1 mt-10px"
           >
             <base-cube
                 :title1="item.name.toUpperCase()"
@@ -23,15 +23,15 @@
         </div>
 
         <!--        Divider-->
-        <div class="row mt-30px">
-          <div class="col-12">
+        <div class="row px-2 mt-30px">
+          <div class="col-12 px-1">
             <div class="divider"/>
           </div>
         </div>
 
         <!--        Form-->
-        <div class="row mt-30px">
-          <div class="col-6">
+        <div class="row px-2 mt-30px">
+          <div class="col-6 px-1">
             <base-input
                 name="amount"
                 v-model="model.amount"
@@ -40,8 +40,9 @@
                 :errors="errors"
             />
           </div>
-          <div class="col-6">
+          <div class="col-6 px-1">
             <base-select
+                v-if="!$route.params.category_id"
                 name="category_id"
                 v-model="model.category_id"
                 label="Kategorija"
@@ -51,8 +52,8 @@
             />
           </div>
         </div>
-        <div class="row mt-10px">
-          <div class="col-12">
+        <div class="row px-2 mt-10px">
+          <div class="col-12 px-1">
             <base-input
                 name="name"
                 v-model="model.name"
@@ -62,29 +63,29 @@
             />
           </div>
         </div>
-        <div class="row mt-10px">
-          <div class="col-6">
+        <div class="row px-2 mt-10px">
+          <div class="col-6 px-1">
           </div>
-          <div class="col-6">
+          <div class="col-6 px-1">
             <base-button
                 name="save"
                 label="Saugoti"
-                color-name="green"
+                color="green"
                 @click="save()"
             />
           </div>
         </div>
 
         <!--        Divider-->
-        <div class="row mt-30px">
-          <div class="col-12">
+        <div class="row px-2 mt-30px">
+          <div class="col-12 px-1">
             <div class="divider"></div>
           </div>
         </div>
 
         <!--        Grid-->
-        <div class="row mt-30px">
-          <div class="col-12">
+        <div class="row px-2 mt-30px">
+          <div class="col-12 px-1">
             <base-grid
                 :items="gridData"
                 :headers="['Nr.', 'Šaltinis', 'Komentaras', 'Suma']"
@@ -93,7 +94,7 @@
               <template #edit="{ item }">
                 <base-icon
                     icon="fa-regular fa-pen-to-square"
-                    color-name="blue"
+                    color="blue"
                     class="pe-2"
                     @click="focus=item.id"
                     data-bs-toggle="modal" data-bs-target="#edit"
@@ -102,7 +103,7 @@
               <template #delete="{ item }">
                 <base-icon
                     icon="fa-solid fa-trash-can"
-                    color-name="blue"
+                    color="blue"
                     class="pe-2"
                     @click="focus=item.id"
                     data-bs-toggle="modal" data-bs-target="#delete"
@@ -121,8 +122,8 @@
     >
       <template #content v-if="modelEdit">
         <!--        Form-->
-        <div class="row mt-30px">
-          <div class="col-6">
+        <div class="row px-2 mt-30px">
+          <div class="col-6 px-1">
             <base-input
                 name="amount"
                 v-model="modelEdit.amount"
@@ -131,7 +132,7 @@
                 :errors="errors"
             />
           </div>
-          <div class="col-6">
+          <div class="col-6 px-1">
             <base-select
                 name="category_id"
                 v-model="modelEdit.category_id"
@@ -142,8 +143,8 @@
             />
           </div>
         </div>
-        <div class="row mt-10px">
-          <div class="col-12">
+        <div class="row px-2 mt-10px">
+          <div class="col-12 px-1">
             <base-input
                 name="name"
                 v-model="modelEdit.name"
@@ -160,7 +161,7 @@
             data-bs-dismiss="modal"
             name="save"
             label="Grįžti"
-            color-name="blue"
+            color="blue"
         />
       </template>
       <template #submit>
@@ -168,7 +169,7 @@
             data-bs-dismiss="modal"
             name="save"
             label="Saugoti"
-            color-name="red"
+            color="red"
             @click="update()"
         />
       </template>
@@ -191,7 +192,7 @@
             data-bs-dismiss="modal"
             name="save"
             label="Ne"
-            color-name="blue"
+            color="blue"
         />
       </template>
       <template #submit>
@@ -199,7 +200,7 @@
             data-bs-dismiss="modal"
             name="save"
             label="Taip"
-            color-name="red"
+            color="red"
             @click="deleteItem()"
         />
       </template>
@@ -341,7 +342,9 @@ export default {
           .then(response => {
             this.total = response.data.total
             this.expenseByCategory = response.data.data
-            this.model.category_id = response.data.data[0]?.id;
+            this.model.category_id = this.$route.params.category_id
+              ? this.$route.params.category_id
+              : response.data.data[0]?.id;
           })
           .finally(() => {
             this.unsetLoading(['expense-by-category', 'save'])
@@ -350,8 +353,12 @@ export default {
     getGridData() {
       this.setLoading(['expense-by-category-grid'])
 
+      const url = this.$route.params.category_id
+        ? `${this.baseUrl}/api/transfers/by-category/${this.$route.params.category_id}`
+        : `${this.baseUrl}/api/transfers`;
+
       axios
-          .get(`${this.baseUrl}/api/transfers`)
+          .get(url)
           .then(response => {
             this.gridData = response.data.data
           })
@@ -394,6 +401,9 @@ export default {
     setModelDefaults() {
       this.model.amount = null;
       this.model.name = null;
+
+      if (this.$route.params.category_id)
+        this.model.category_id = this.$route.params.category_id;
     },
     resetErrors() {
       this.errors = {};

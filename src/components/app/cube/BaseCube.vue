@@ -1,5 +1,5 @@
 <template>
-    <div :class="[`color-${bg}-bg`, title2 ? '' : 'py-1']" @click="$emit('update:modelValue', value)">
+    <div :class="[`color-${bg}-bg custom-card-shadow`, title2 ? '' : 'py-1']" @click="$emit('update:modelValue', value)">
       <div v-if="loading" class="top-card-title color-text-card-balance d-flex justify-content-center align-items-center ">
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       </div>

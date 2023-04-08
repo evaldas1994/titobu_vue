@@ -1,15 +1,33 @@
 <template>
   <div>
     <div>
-      <div class="container">
+      <div class="container-fluid px-3">
         <!--        Top Title-->
         <div class="row mt-10px">
-          <div class="top-text d-flex justify-content-center align-items-center color-black-icon text-center"><span>{{ formatAmount(total) }}</span></div>
+          <div class="top-text d-flex justify-content-center align-items-center">
+            <span v-if="!showTitleDetails" @click="showTitleDetails = !showTitleDetails" class="color-black-icon">{{ formatAmount(total) }}</span>
+            <div v-if="showTitleDetails" @click="showTitleDetails = !showTitleDetails">
+              <ul class="list-group color-text-title">
+                <li class="list-group-item color-text-title color-text-card-balance h6 color-black-icon d-flex justify-content-between mb-0">
+                  <span class="pe-2">Praėjęs laikotarpis:</span>
+                  <span class="ps-2">{{ formatAmount(total) }}</span>
+                </li>
+                <li class="list-group-item color-text-title color-text-card-balance h6 color-black-icon d-flex justify-content-between mb-0">
+                  <span class="pe-2">Šis laikotarpis:</span>
+                  <span class="ps-2">{{ formatAmount(totalIn - totalOut) }}</span>
+                </li>
+                <li class="list-group-item color-text-title color-text-card-balance h6 color-black-icon d-flex justify-content-between mb-0">
+                  <span class="pe-2">Taupymai:</span>
+                  <span class="ps-2">{{ formatAmount(0) }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
 
         <!--        Cube-->
-        <div class="row mt-10px">
-          <div class="col-4">
+        <div class="row mt-10px px-2">
+          <div class="col-4 px-1">
             <base-cube
                 :title1="formatAmount(totalIn)"
                 bg="green"
@@ -17,14 +35,14 @@
                 :loading="isLoading(['mounted'])"
             />
           </div>
-          <div class="col-4">
+          <div class="col-4 px-1">
             <base-cube
                 :title1="formatAmount(totalIn - totalOut)"
                 bg="yellow"
                 :loading="isLoading(['mounted'])"
             />
           </div>
-          <div class="col-4">
+          <div class="col-4 px-1">
             <base-cube
                 :title1="formatAmount(totalOut)"
                 bg="red"
@@ -35,15 +53,15 @@
         </div>
 
         <!--        Divider-->
-        <div class="row mt-30px">
-          <div class="col-12">
+        <div class="row mt-30px px-2">
+          <div class="col-12 px-1">
             <div class="divider"></div>
           </div>
         </div>
 
         <!--        Circles-->
-        <div class="row mt-20px">
-          <div class="col-6 mt-10px"
+        <div class="row mt-20px px-2">
+          <div class="col-6 px-1 mt-10px"
                v-for="(item, index) in categoryBalanceAnalyticsData"
                :key="index"
           >
@@ -54,8 +72,8 @@
         </div>
 
         <!--        Divider-->
-        <div class="row mt-30px">
-          <div class="col-12">
+        <div class="row mt-30px px-2">
+          <div class="col-12 px-1">
             <div class="divider"></div>
           </div>
         </div>
@@ -84,6 +102,7 @@ export default {
       total: 0,
       totalIn: 0,
       totalOut: 0,
+      showTitleDetails: false,
 
       categoryBalanceAnalyticsData: [],
     }
@@ -129,7 +148,7 @@ export default {
           console.log(error)
           this.errored = true
         })
-        .finally(() => this.loading = false)
+        .finally(() => this.unsetLoading(['mounted']))
   }
 }
 </script>

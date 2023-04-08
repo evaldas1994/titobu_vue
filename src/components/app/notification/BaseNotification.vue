@@ -8,14 +8,14 @@
         <base-icon
             v-if="notification.type === 'success'"
             icon="fa-regular fa-square-check"
-            color-name="green"
+            color="green"
             iconClass="icon-24 me-2"
         />
 
         <base-icon
             v-if="notification.type === 'error'"
             icon="fa-solid fa-triangle-exclamation"
-            color-name="red"
+            color="red"
             iconClass="icon-24 me-2"
         />
         <div class="text-start">
@@ -25,7 +25,7 @@
 
       <base-icon
           icon="fa-regular fa-rectangle-xmark"
-          color-name="red"
+          color="red"
           iconClass="icon-24"
           data-bs-dismiss="alert"
       />

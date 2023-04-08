@@ -1,5 +1,5 @@
 <template>
-  <div class="bg font vh-100 vw-100">
+  <div class="font vh-100 vw-100">
     <div v-if="auth">
       <NavigationComponent/>
       <base-notification/>
@@ -51,7 +51,6 @@ export default {
 }
 
 .top-text {
-  width: 100vw;
   height: 132px;
 
   font-weight: 700;
@@ -113,7 +112,7 @@ export default {
   -webkit-text-fill-color: transparent;
 }
 .color-green-icon {
-  background: linear-gradient(180deg, #11D700 0%, #000000 100%);
+  background: linear-gradient(180deg, #12b701 0%, #000000 100%);
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
 
@@ -278,8 +277,8 @@ export default {
   scrollbar-width: none;  /* Firefox */
 }
 
-.shadow {
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+.custom-card-shadow {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 .icon-24 {
   font-size: 24px;

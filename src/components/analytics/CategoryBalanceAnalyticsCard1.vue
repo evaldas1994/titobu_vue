@@ -2,7 +2,7 @@
   <div>
 
     <div :class="[`color-${item.color}-bg`]">
-      <div class="container py-2">
+      <div class="container py-2 custom-card-shadow">
         <div class="row">
           <div class="col-8 pe-1 px-0 d-flex">
             <div class="container pb-2">
@@ -13,8 +13,11 @@
                   </div>
                 </div>
                 <div class="col-12">
-                  <div class="balance text-uppercase">
-                    <span class="text-nowrap">{{formatAmount(item.balance)}}</span>
+                  <div class=" h-100 d-flex">
+                    <span class="balance text-uppercase text-nowrap">{{formatAmount(item.balance)}}</span>
+                    <span v-if="item.savings === 0"></span>
+                    <span v-else-if="item.savings > 0" class=" h-100 text-nowrap savings align-items-start color-green-icon">{{`+${formatAmount(item.savings)}`}}</span>
+                    <span v-else class=" h-100 text-nowrap savings align-items-start color-red-icon">{{ formatAmount(item.savings) }}</span>
                   </div>
                 </div>
               </div>
@@ -24,7 +27,7 @@
 
           <div class="col-4 ps-1 d-flex align-items-center pb-2  justify-content-end">
             <div :class="['icon-circle', `color-${item.color}-bg`]">
-            <i @click="$router.push(`/transfer/create-by-category/${this.item.id}`)" :class="[item.icon, 'icon', `color-${item.color}-icon`]"></i>
+            <i @click="$router.push(`/expenses/create-by-category/${this.item.id}`)" :class="[item.icon, 'icon', `color-${item.color}-icon`]"></i>
             </div>
           </div>
         </div>
@@ -135,6 +138,28 @@ export default {
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
+.savings {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 10px;
+
+  /* card/balance */
+  color: #E4E4E4;
+
+  /*text-shadow: 0px 4px 4px rgb(255, 255, 255, 0.25);*/
+}
+
+.savings-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
 .balance_details {
   height: 17px;
 
@@ -192,6 +217,5 @@ export default {
   color: #D9D9D9;
 
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
 }
 </style>

@@ -4,7 +4,8 @@
         :class="[
             'btn-save',
             `color-${color}-bg`,
-            'color-text-card-balance'
+            'color-text-card-balance',
+            'shadow'
           ]"
         type="button"
     >

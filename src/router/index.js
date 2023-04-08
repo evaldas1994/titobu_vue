@@ -60,6 +60,10 @@ const routes = [
         component: EarningPage
     },
     {
+        path: '/expenses/create-by-category/:category_id',
+        component: ExpensesPage
+    },
+    {
         path: '/expenses',
         component: ExpensesPage
     },

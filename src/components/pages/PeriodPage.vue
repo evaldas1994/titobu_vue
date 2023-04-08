@@ -62,7 +62,7 @@
             <base-button
                 name="save"
                 label="Saugoti"
-                color-name="green"
+                color="green"
                 @click="isLoading(['save'])
                   ? unsetLoading(['save'])
                   : setLoading(['save'])"

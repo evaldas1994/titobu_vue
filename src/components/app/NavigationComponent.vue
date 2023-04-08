@@ -19,7 +19,7 @@
         >
           <base-icon
               icon="fa-solid fa-rectangle-xmark"
-              color-name="red"
+              color="red"
               iconClass="icon-x"
           />
         </div>
@@ -31,7 +31,7 @@
       >
         <base-icon
             icon="fa-solid fa-bars"
-            color-name="black"
+            color="black"
             iconClass="icon-x"
         />
       </div>
